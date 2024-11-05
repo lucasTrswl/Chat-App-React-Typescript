@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import {AuthService} from "../Services/AuthService"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   username: string;
@@ -13,6 +14,8 @@ export default function Register() {
     register,
     formState: { errors },
   } = useForm<Inputs>();
+
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState<string>("");
 
@@ -59,13 +62,17 @@ export default function Register() {
           )}
         </div>
 
+
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition duration-300"
         >
           S'inscrire
         </button>
-
+          <p>Déjà un compte ?</p>
+            <button 
+            onClick={() => navigate("/login")}
+            className="w-48 bg-blue-500 text-white py-2 rounded-lg ">Se connecter</button>
         {message.length > 0 && <p className="mt-4 text-center text-sm text-gray-700">{message}</p>}
 
       </form>

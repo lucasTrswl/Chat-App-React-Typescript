@@ -1,4 +1,6 @@
 import React from "react";
+import { AuthService } from "../Services/AuthService"; // Adjust path as necessary
+import { useNavigate } from "react-router-dom";
 
 type Conversation = {
   id: number;
@@ -13,11 +15,25 @@ const conversations: Conversation[] = [
   { id: 3, name: "Marie",  time: "12:30 PM" },
 ];
 
+
 export default function ConversationsList() {
+
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    const success = await AuthService.Logout();
+
+    if(success) {
+      console.log("Déconnexion réussie");
+      navigate("/login")
+    } else {
+      console.log("Erreur")
+    }
+  };
+
   return (
-    <div className="w-80 h-screen bg-gray-100 border-r">
+    <div className="flex flex-col w-80 h-screen bg-gray-100 border-r">
       <h2 className="p-4 text-2xl font-semibold text-gray-700 border-b">Conversations</h2>
-      <div className="overflow-y-auto">
+      <div className="overflow-y-auto flex-grow">
         {conversations.map((conversation) => (
           <div
             key={conversation.id}
@@ -28,12 +44,12 @@ export default function ConversationsList() {
             </div>
             <div className="text-right">
               <p className="text-xs text-gray-400">Last message: {conversation.time}</p>
-              
-              
             </div>
           </div>
         ))}
       </div>
+      <button type="button" onClick={handleLogout} className="p-4 w-full  bg-red-500 cursor-pointer hover:text-white
+      ">Se déconnecter</button>
     </div>
   );
 }
