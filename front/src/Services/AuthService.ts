@@ -59,33 +59,41 @@ export class AuthService {
                     console.log("ERREUR AUTH REGISTER JSON", ex);
                 }
             }
+            
         } catch(ex) {
             console.log("ERR AUTH REGISTER REQUEST",ex);
             message = "Problème de connexion, vérifier votre accès internet.";
-        }
+        } 
 
         return message;
     }
 
-    static async Login(username: string, password: string) {
+    // AuthService.ts
+
+static async Login(username: string, password: string): Promise<{ success: boolean, message: string }> {
+    try {
         const response = await fetch(AUTH_LOGIN, {
             method: "post",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                username,
-                password
-            })
+            body: JSON.stringify({ username, password })
         });
 
-        
-        
-        const success = response.status == HTTP_STATUS_CREATED;
-
-        return success;
+        if (response.status === HTTP_STATUS_CREATED) {
+            // Login successful
+            return { success: true, message: "Login successful!" };
+        }  else {
+            // Other error
+            return { success: false, message: "Login failed. Please try again" };
+        }
+    } catch (error) {
+        console.log("Login error:", error);
+        return { success: false, message: "An unexpected error occurred. Please try again." };
     }
+}
+
 
     static async Logout() {
         const response = await fetch(AUTH_LOGOUT, {

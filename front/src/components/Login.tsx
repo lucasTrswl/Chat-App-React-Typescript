@@ -1,4 +1,7 @@
 import { useForm } from "react-hook-form";
+import { AuthService } from "../Services/AuthService"; // Adjust path as necessary
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   username: string;
@@ -6,12 +9,21 @@ type Inputs = {
 };
 
 export default function Login() {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit = (values: Inputs) => console.log(values);
+  const { handleSubmit, register, formState: { errors } } = useForm<Inputs>();
+  const [loginMessage, setLoginMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const onSubmit = async (values: Inputs) => {
+    const { success, message } = await AuthService.Login(values.username, values.password);
+
+    if (success) {
+      console.log("Login successful!");
+      //navigate to dashboard
+      navigate("/");
+    } else {
+      setLoginMessage(message);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -39,10 +51,7 @@ export default function Login() {
             placeholder="Password"
             {...register("password", {
               required: "Password is required",
-              pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                message: "Must be at least 8 characters, with a letter, number, and special character",
-              },
+             
             })}
             className="w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -51,7 +60,10 @@ export default function Login() {
           )}
         </div>
 
-        
+        {loginMessage && (
+          <p className="mt-2 text-sm text-red-500 text-center">{loginMessage}</p>
+        )}
+
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition duration-300"
