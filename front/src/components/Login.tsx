@@ -5,7 +5,7 @@ type Inputs = {
   password: string;
 };
 
-export default function Register() {
+export default function Login() {
   const {
     handleSubmit,
     register,
@@ -19,9 +19,8 @@ export default function Register() {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm space-y-4"
       >
-        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">S'inscrire</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">Se connecter</h2>
 
-        {/* Username Field */}
         <div>
           <input
             type="text"
@@ -34,7 +33,6 @@ export default function Register() {
           )}
         </div>
 
-        {/* Password Field */}
         <div>
           <input
             type="password"
@@ -53,12 +51,12 @@ export default function Register() {
           )}
         </div>
 
-        {/* Submit Button */}
+        
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition duration-300"
         >
-          S'inscrire
+          Se connecter
         </button>
       </form>
     </div>
