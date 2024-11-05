@@ -51,13 +51,11 @@ export class AuthService {
                 })
             });
 
-            if (response.status == HTTP_STATUS_CREATED) {
-                try {
-                    const authObject: IAuthRegister = (await response.json()) as IAuthRegister;
-                    message = authObject.message;
-                } catch(ex) {
-                    console.log("ERREUR AUTH REGISTER JSON", ex);
-                }
+            try {
+                const authObject: IAuthRegister = (await response.json()) as IAuthRegister;
+                message = authObject.message;
+            } catch(ex) {
+                console.log("ERREUR AUTH REGISTER JSON", ex);
             }
         } catch(ex) {
             console.log("ERR AUTH REGISTER REQUEST",ex);
@@ -67,33 +65,42 @@ export class AuthService {
         return message;
     }
 
-    static async Login(username: string, password: string) {
-        const response = await fetch(AUTH_LOGIN, {
-            method: "post",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username,
-                password
-            })
-        });
+    static async Login(username: string, password: string): Promise<boolean> {
+        try {
+            const response = await fetch(AUTH_LOGIN, {
+                method: "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+            });
 
-        
-        
-        const success = response.status == HTTP_STATUS_CREATED;
+            const success = response.status == HTTP_STATUS_CREATED;
+            return success;
 
-        return success;
+        } catch(error) {
+            console.log("ERREUR AUTH LOGIN", error);
+        }
+            
+        return false;
     }
 
-    static async Logout() {
-        const response = await fetch(AUTH_LOGOUT, {
-            method: "post"
-        });
-
-        const success = response.status == HTTP_STATUS_CREATED;
-
-        return success;
+    static async Logout(): Promise<boolean> {
+        try {
+            const response = await fetch(AUTH_LOGOUT, {
+                method: "post"
+            });
+    
+            const success = response.status == HTTP_STATUS_CREATED;
+    
+            return success;
+        } catch(error) {
+            console.log("ERREUR AUTH LOGOUT",error);
+        }
+        return false;
     }
 }
