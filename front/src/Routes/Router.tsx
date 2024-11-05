@@ -8,8 +8,8 @@ const Router: React.FC = () => (
 	<BrowserRouter>
 		<Routes>
 			<Route path='/register' element={<Register />}/>;
-			<Route path='/login' element={<Login />}/>
-			<Route path='/' element={< ConversationsList/>}/>
+			<Route path='/' element={<Login />}/>
+			<Route path='/chat' element={< ConversationsList/>}/>
 
 
 		</Routes>
