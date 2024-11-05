@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import {AuthService} from "../Services/AuthService"
+import { useState } from "react";
 
 type Inputs = {
   username: string;
@@ -11,7 +13,13 @@ export default function Register() {
     register,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit = (values: Inputs) => console.log(values);
+
+  const [message, setMessage] = useState<string>("");
+
+  const onSubmit = async (values: Inputs) => {
+    const responseMessage = await AuthService.Register(values.username, values.password);
+    setMessage(responseMessage);
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -21,7 +29,6 @@ export default function Register() {
       >
         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">S'inscrire</h2>
 
-        {/* Username Field */}
         <div>
           <input
             type="text"
@@ -34,7 +41,6 @@ export default function Register() {
           )}
         </div>
 
-        {/* Password Field */}
         <div>
           <input
             type="password"
@@ -53,13 +59,15 @@ export default function Register() {
           )}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition duration-300"
         >
           S'inscrire
         </button>
+
+        {message && <p className="mt-4 text-center text-sm text-gray-700">{message}</p>}
+
       </form>
     </div>
   );
