@@ -66,7 +66,7 @@ export default function Register() {
           S'inscrire
         </button>
 
-        {message && <p className="mt-4 text-center text-sm text-gray-700">{message}</p>}
+        {message.length > 0 && <p className="mt-4 text-center text-sm text-gray-700">{message}</p>}
 
       </form>
     </div>

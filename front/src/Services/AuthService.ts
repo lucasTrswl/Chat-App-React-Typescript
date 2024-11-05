@@ -51,13 +51,11 @@ export class AuthService {
                 })
             });
 
-            if (response.status == HTTP_STATUS_CREATED) {
-                try {
-                    const authObject: IAuthRegister = (await response.json()) as IAuthRegister;
-                    message = authObject.message;
-                } catch(ex) {
-                    console.log("ERREUR AUTH REGISTER JSON", ex);
-                }
+            try {
+                const authObject: IAuthRegister = (await response.json()) as IAuthRegister;
+                message = authObject.message;
+            } catch(ex) {
+                console.log("ERREUR AUTH REGISTER JSON", ex);
             }
             
         } catch(ex) {
@@ -95,13 +93,18 @@ static async Login(username: string, password: string): Promise<{ success: boole
 }
 
 
-    static async Logout() {
-        const response = await fetch(AUTH_LOGOUT, {
-            method: "post"
-        });
-
-        const success = response.status == HTTP_STATUS_CREATED;
-
-        return success;
+    static async Logout(): Promise<boolean> {
+        try {
+            const response = await fetch(AUTH_LOGOUT, {
+                method: "post"
+            });
+    
+            const success = response.status == HTTP_STATUS_CREATED;
+    
+            return success;
+        } catch(error) {
+            console.log("ERREUR AUTH LOGOUT",error);
+        }
+        return false;
     }
 }
