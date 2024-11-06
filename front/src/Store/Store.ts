@@ -4,30 +4,43 @@ import { IAuthMe } from '../Models/Auth';
 import { IMessage } from '../Models/Message';
 import { IFriend, IFriendRequest } from '../Models/Social';
 
-export const useStore = create<IStore>((set)=>({
+const loadMessagesFromStorage = (): IMessage[] => {
+  const savedMessages = localStorage.getItem('messages');
+  return savedMessages ? JSON.parse(savedMessages) : [];
+};
 
-    // States //
-    logged: false,
-    user: undefined,
-    messages: [],
-    friends: [],
-    friendRequests: [],
+const saveMessagesToStorage = (messages: IMessage[]) => {
+  localStorage.setItem('messages', JSON.stringify(messages));
+};
 
-    // Methods //
-    setLoggedUser: (user: IAuthMe) => set({ logged: true, user }),
-    removeLoggerUser: () => set({ logged: false, user: undefined }),
+export const useStore = create<IStore>((set) => ({
+  // States
+  logged: false,
+  user: undefined,
+  messages: loadMessagesFromStorage(),
+  friends: [],
+  friendRequests: [],
 
-    loadMessages: (messages: IMessage[]) => set({ messages }),
+  // Methods
+  setLoggedUser: (user: IAuthMe) => set({ logged: true, user }),
+  removeLoggerUser: () => set({ logged: false, user: undefined }),
 
-    addMessage: (message: IMessage) => set((state) => ({
-        messages: [...state.messages, message]
-    })),
+  loadMessages: (messages: IMessage[]) => {
+    saveMessagesToStorage(messages);
+    set({ messages });
+  },
 
-    addFriend: (friend: IFriend) => set((state) => ({
-        friends: [...state.friends, friend]
-    })),
+  addMessage: (message: IMessage) => set((state) => {
+    const updatedMessages = [...state.messages, message];
+    saveMessagesToStorage(updatedMessages);
+    return { messages: updatedMessages };
+  }),
 
-    addFriendRequest: (friendRequest: IFriendRequest) => set((state) => ({
-        friendRequests: [...state.friendRequests, friendRequest]
-    }))
-}))
+  addFriend: (friend: IFriend) => set((state) => ({
+    friends: [...state.friends, friend],
+  })),
+
+  addFriendRequest: (friendRequest: IFriendRequest) => set((state) => ({
+    friendRequests: [...state.friendRequests, friendRequest],
+  })),
+}));

@@ -34,6 +34,7 @@ export default function ConversationsList() {
   }; 
 
   return (
+
       <div className="flex flex-col w-80 h-screen bg-gray-100 border-r">
           <div className="flex flex-row justify-between w-full">
               <h2 className="p-4 text-2xl font-semibold text-gray-700 border-b">Conversations</h2>
@@ -72,5 +73,6 @@ export default function ConversationsList() {
               Se déconnecter
           </button>
       </div>
+
   );
 }

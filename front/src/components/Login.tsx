@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { AuthService } from "../Services/AuthService"; // Adjust path as necessary
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useStore } from "../Store/Store";
 
 type Inputs = {
   username: string;
@@ -25,6 +26,7 @@ export default function Login() {
     }
   };
 
+  const logged = useStore((state) => state.logged)
 
   
 
