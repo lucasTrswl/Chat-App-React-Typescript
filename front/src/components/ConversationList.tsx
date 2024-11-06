@@ -29,7 +29,8 @@ export default function ConversationsList() {
   };
 
   const handleConversationClick = (id: number, name: string) => {
-    navigate(`/conversation/${id}`, { state: { name }}); 
+    navigate(`/conversation/${id}`, { state: { name }});
+  }; 
 
   return (
     <div className="flex flex-col w-80 h-screen bg-gray-100 border-r">
@@ -39,7 +40,7 @@ export default function ConversationsList() {
           <div
             key={conversation.id}
             className="flex items-center justify-between p-4 hover:bg-gray-200 cursor-pointer transition-colors duration-200"
-            onClick={() => handleConversationClick(conversation.id, conversation.name)} // Ajoute la gestion du clic
+            onClick={() => handleConversationClick(conversation.id, conversation.name)}
           >
             <div>
               <h3 className="text-lg font-medium text-gray-800">{conversation.name}</h3>
@@ -59,5 +60,4 @@ export default function ConversationsList() {
       </button>
     </div>
   );
-}
 }
