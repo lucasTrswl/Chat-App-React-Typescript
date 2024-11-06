@@ -6,6 +6,6 @@ export interface IFriend {
 
 export interface IFriendRequest {
     id: string
-    senderId: string
+    username: string
     requestedAt: string
 }
