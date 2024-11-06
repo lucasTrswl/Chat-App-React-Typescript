@@ -3,7 +3,7 @@ import App from "../App";
 import Register from "../components/Register";
 import Login from "../components/Login";
 import ConversationsList from "../components/ConversationList";
-
+import ConversationPage from "../components/ConversationPage";
 
 const Router: React.FC = () => (
 	<BrowserRouter>
@@ -11,6 +11,7 @@ const Router: React.FC = () => (
 			<Route path='/register' element={<Register />}/>;
 			<Route path='/login' element={<Login />}/>;
 			<Route path="/chat" element={<ConversationsList/>}/>
+			<Route path="/conversation/:id" element={<ConversationPage/>}/>
 		</Routes>
 	</BrowserRouter>
 );
