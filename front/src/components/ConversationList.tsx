@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthService } from "../Services/AuthService"; // Ajuste le chemin si nécessaire
+import { AuthService } from "../Services/AuthService"; 
 import { useNavigate } from "react-router-dom";
 
 type Conversation = {
