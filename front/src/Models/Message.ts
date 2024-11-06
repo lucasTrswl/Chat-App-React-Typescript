@@ -4,3 +4,4 @@ export interface IMessage {
     content: string
     sendAt: string
 }
+

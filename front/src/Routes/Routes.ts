@@ -20,3 +20,5 @@ export const SOCIAL_GET_FRIENDS = API_URL + "/social/friends";
 
 // Notification routes
 export const NOTIFICATIONS = API_URL + "/notifications";
+
+

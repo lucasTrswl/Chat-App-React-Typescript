@@ -1,47 +1,42 @@
 import React, { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import ConversationsList from './ConversationList';
+import { IMessage } from '../Models/Message';
+import { useStore } from '../Store/Store';
+import Linkify from 'linkify-react';
 
-type Message = {
-  id: number;
-  text: string;
-  sender: 'Lucas' | 'Hugo';
-  time: string;
-};
+const messages:  IMessage[] = [
+  { id: "1", content: 'Salut ! Comment ça va ?', emitterId: 'Lucas', sendAt: '10:45 AM' },
+  { id: "2", content: 'Très bien, merci ! Et toi ?', emitterId: 'Hugo', sendAt: '10:46 AM' },
+  { id: "3", content: 'Ça va aussi !', emitterId: 'Lucas', sendAt: '10:47 AM' },]
+  
 
 export default function ConversationPage() {
   const { id } = useParams();
   const location = useLocation();
   const { name } = location.state || {};
 
+  const messages = useStore((state) => state.messages);
+  const addMessage = useStore((state) => state.addMessage);
+
   const [message, setMessage] = useState<string>('');
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: 'Salut ! Comment ça va ?', sender: 'Lucas', time: '10:45 AM' },
-    { id: 2, text: 'Très bien, merci ! Et toi ?', sender: 'Hugo', time: '10:46 AM' },
-    { id: 3, text: 'Ça va aussi !', sender: 'Lucas', time: '10:47 AM' },
-  ]);
 
   const handleSendMessage = () => {
-    //vérifie que le champ n'est pas vide
     if (message.trim()) {
-      // création d'un nouveau message
-      const newMessage: Message = {
-        id: messages.length + 1,
-        text: message,
-        sender: 'Hugo',
-        time: new Date().toLocaleTimeString(),
+      const newMessage: IMessage = {
+        id: Date.now().toString(),
+        content: message,
+        emitterId: 'Hugo',
+        sendAt: new Date().toLocaleTimeString(),
       };
-      // le nouveau message est set et est envoyé dans le tchat
-      setMessages([...messages, newMessage]);
-      setMessage('');
+      addMessage(newMessage);  
+      setMessage('');          
     }
   };
 
   return (
-  
     <div className="flex h-screen bg-gray-100">
-
-      <div className=" bg-white border-r overflow-y-auto">
+      <div className="bg-white border-r overflow-y-auto">
         <ConversationsList />
       </div>
 
@@ -52,10 +47,13 @@ export default function ConversationPage() {
 
         <div className="flex-grow overflow-y-auto p-4">
           {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.sender === 'Hugo' ? 'justify-end' : 'justify-start'} mb-2`}>
-              <div className={`max-w-xs rounded-lg p-3 ${msg.sender === 'Hugo' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
-                <p>{msg.text}</p>
-                <span className="text-xs text-gray-500">{msg.time}</span>
+            <div key={msg.id} className={`flex ${msg.emitterId === 'Hugo' ? 'justify-end' : 'justify-start'} mb-2`}>
+              <div className={`max-w-xs rounded-lg p-3 ${msg.emitterId === 'Hugo' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
+               
+               <Linkify>
+                <p>{msg.content}</p>
+                </Linkify>
+                <span className="text-xs text-gray-500">{msg.sendAt}</span>
               </div>
             </div>
           ))}
