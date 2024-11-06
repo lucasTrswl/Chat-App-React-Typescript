@@ -11,13 +11,13 @@ function FriendsRequest() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-4">
-                <h1 className="text-2xl font-bold text-center mb-4">My Friends Request</h1>
+                <h1 className="text-2xl font-bold text-center mb-4">Mes demandes d'amis</h1>
                 <table className="table-auto w-full text-center border-collapse">
                     <thead>
                     <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                         <th className="py-3 px-6">#</th>
-                        <th className="py-3 px-6">Username</th>
-                        <th className="py-3 px-6">Add Friend?</th>
+                        <th className="py-3 px-6">Pseudo</th>
+                        <th className="py-3 px-6">Accepter ?</th>
                     </tr>
                     </thead>
                     <tbody className="text-gray-700">

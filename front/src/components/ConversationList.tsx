@@ -2,7 +2,6 @@ import React from "react";
 import { AuthService } from "../Services/AuthService"; // Adjust path as necessary
 import { useNavigate } from "react-router-dom";
 import friendsRequest from '../img/friendsRequest.png';
-import imgValidate from "../img/valide.png";
 
 type Conversation = {
   id: number;
