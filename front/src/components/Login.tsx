@@ -19,7 +19,7 @@ export default function Login() {
     if (success) {
       console.log("Login successful!");
       //navigate to dashboard
-      navigate("/");
+      navigate("/chat");
     } else {
       setLoginMessage(message);
     }
