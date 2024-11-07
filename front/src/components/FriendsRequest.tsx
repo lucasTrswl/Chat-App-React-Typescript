@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import ConversationList from "../components/ConversationList";
 import { useState, useEffect } from "react";
 import {IFriendRequest} from '../Models/Social';
+import {useStore} from "../Store/Store";
 
-const people: IFriendRequest[] = [
+const people2: IFriendRequest[] = [
     {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
     {id: '2', senderId: 'Marc', requestedAt: '2024-11-06T15:22:56.709Z'},
     {id: '3', senderId: 'Bob', requestedAt: '2024-11-06T16:22:56.709Z'},
@@ -15,6 +16,8 @@ const people: IFriendRequest[] = [
 ];
 
 function FriendsRequest() {
+
+    const people = useStore((state) => state.friendRequests);
 
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
