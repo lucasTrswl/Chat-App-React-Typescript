@@ -7,7 +7,6 @@ import {IFriendRequest} from '../Models/Social';
 import {useStore} from "../Store/Store";
 import { SocialBO } from '../business/SocialBO';
 import Notification from "./Notification";
-import FriendAccept from "../components/FriendAccept";
 
 const people2: IFriendRequest[] = [
     {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},

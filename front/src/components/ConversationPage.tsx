@@ -9,7 +9,6 @@ import { OrderDatesAscending, RelativeTimeString } from '../Utility/Dates';
 import { IMessage } from '../Models/Message';
 import { AuthService } from '../Services/AuthService';
 import Notification from "./Notification";
-import FriendAccept from "./FriendAccept";
 
 
 export default function ConversationPage() {

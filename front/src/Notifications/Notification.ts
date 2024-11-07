@@ -38,7 +38,7 @@ export class Notifications extends BaseBO {
     }
 
     Notify(title: string, message: string, url?: string) {
-        
+        console.log("notifications:", title, message, url)
     }
 
     private messageReceived(message: IMessage) {
