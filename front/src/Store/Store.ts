@@ -28,7 +28,7 @@ export const useStore = create<IStore>((set)=>({
     loadMessages: (messages: IMessage[]) => set({ messages }),
 
     addMessage: (message: IMessage) => set((state) => {
-        if (state.messages.includes(message)) return {}
+        if (state.messages.find(m => m.id == message.id)) return {}
 
         return {
             messages: [...state.messages, message]
