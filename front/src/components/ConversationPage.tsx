@@ -7,6 +7,7 @@ import Linkify from 'linkify-react';
 import { MessageBO } from '../business/MessageBO';
 import { OrderDatesAscending, RelativeTimeString } from '../Utility/Dates';
 import { IMessage } from '../Models/Message';
+import { AuthService } from '../Services/AuthService';
 
 export default function ConversationPage() {
   const { id } = useParams();
@@ -16,6 +17,7 @@ export default function ConversationPage() {
   const messages = OrderDatesAscending(useStore((state) => state.messages), (message: IMessage) => message.sendAt);
   const user = useStore((state) => state.user);
   const userId = user != undefined ? user.id : "";
+  console.log(user);
   const BO = new MessageBO(useStore);
 
 
@@ -24,10 +26,17 @@ export default function ConversationPage() {
 
   // Gérer la détection de la largeur d'écran
   useEffect(() => {
+    ( async () =>{
+      const user = await AuthService.Me();
+      console.log(user);
+    })()
+    
     const handleResize = () => setIsMobile(window.innerWidth < 900);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+
 
 
   const [message, setMessage] = useState<string>('');
@@ -44,6 +53,11 @@ export default function ConversationPage() {
       BO.SendMessage( friendId,  message);  
       setMessage('');          
     }
+  };
+
+  const linkifyOptions = {
+    target: '_blank',
+    rel: 'noopener noreferrer',
   };
 
   return (
@@ -88,7 +102,7 @@ export default function ConversationPage() {
               <div className={`max-w-xs rounded-lg p-3 ${msg.emitterId === userId ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
 
                
-               <Linkify>
+              <Linkify options={linkifyOptions}>
                 <p>{msg.content}</p>
                 </Linkify>
 

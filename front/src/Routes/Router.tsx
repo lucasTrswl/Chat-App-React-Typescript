@@ -46,7 +46,7 @@ const router = createBrowserRouter([
 		element: <Login />,
 	},
 	{
-		path: "/chat",
+		path: "/conversation",
 		element: (
 		<RequireAuth>
 			<ConversationsList />
