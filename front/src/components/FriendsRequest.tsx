@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 import {IFriendRequest} from '../Models/Social';
 import {useStore} from "../Store/Store";
 import { SocialBO } from '../business/SocialBO';
-import Notification from "./Notification";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+ 
 
 const people2: IFriendRequest[] = [
     {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
@@ -22,6 +22,7 @@ const people2: IFriendRequest[] = [
 function FriendsRequest() {
 
     const [textToCopy, setTextToCopy] = useState('');
+
 
     
 
@@ -180,6 +181,7 @@ function FriendsRequest() {
                                     </tr>
                                 ))}
                                 </tbody>
+                                
                             </table>
                         </div>
 
@@ -188,6 +190,7 @@ function FriendsRequest() {
 
                 </div>
             </div>
+            
         </>
     );
 }

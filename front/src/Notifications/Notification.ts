@@ -6,6 +6,7 @@ import { BaseBO } from "../business/BaseBO";
 import { IMessage } from "../Models/Message";
 import { IFriendRequest, IFriendRequestReceive } from "../Models/Social";
 import { SocialBO } from "../business/SocialBO";
+import { toast } from "react-toastify";
 
 function ParseNotificationData<T>(notification: INotification): T {
     const data = JSON.parse(notification.data) as T;
@@ -38,7 +39,8 @@ export class Notifications extends BaseBO {
     }
 
     Notify(title: string, message: string, url?: string) {
-        console.log("notifications:", title, message, url)
+        console.log("notifications:", title, message, url);
+        toast(title + " " + message);
     }
 
     private messageReceived(message: IMessage) {
