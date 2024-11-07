@@ -20,6 +20,7 @@ function FriendsRequest() {
 
     const BO = new SocialBO(useStore);
 
+    //BO.LoadFriendRequests();
 
     const people = useStore((state) => state.friendRequests);
 
@@ -51,6 +52,8 @@ function FriendsRequest() {
     }
     const handleAddAcceptRequest = async () => {
         const success = await AuthService.Logout();
+
+        //BO.AcceptFriendRequest();
 
         if (success) {
             console.log("Ami ajouté");
@@ -119,7 +122,7 @@ function FriendsRequest() {
                                 <thead>
                                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                     <th className="py-3 px-6">#</th>
-                                    <th className="py-3 px-6">Pseudo</th>
+                                    <th className="py-3 px-6">Identifiant Utilisateur</th>
                                     <th className="py-3 px-6">Accepter ?</th>
                                 </tr>
                                 </thead>

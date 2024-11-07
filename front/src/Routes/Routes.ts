@@ -1,5 +1,5 @@
 // Backend url //
-export const API_URL = "http://localhost:3000";
+export const API_URL = "http://10.49.32.176:3000";
 
 // Auth routes //
 export const AUTH_REGISTER = API_URL + "/auth/register"
@@ -15,7 +15,7 @@ export const MESSAGES_GET = (userId: string) => API_URL + `/messages/${userId}`;
 // Social routes //
 export const SOCIAL_SEND_FRIEND_REQUEST = (requestId: string) => API_URL + `/social/friend-request/${requestId}`;
 export const SOCIAL_ACCEPT_FRIEND_REQUEST = (requestId: string) => API_URL + `/social/friend-request/${requestId}/accept`;
-export const SOCIAL_GET_FRIEND_REQUESTS = API_URL + "/social/friend-request";
+export const SOCIAL_GET_FRIEND_REQUESTS = API_URL + "/social/friend-requests";
 export const SOCIAL_GET_FRIENDS = API_URL + "/social/friends";
 
 // Notification routes
