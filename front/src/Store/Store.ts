@@ -3,20 +3,13 @@ import { IStore } from '../Models/Store';
 import { IAuthMe } from '../Models/Auth';
 import { IMessage, IMessageSendQueue } from '../Models/Message';
 import { IFriend, IFriendRequest } from '../Models/Social';
-import FriendsRequest from '../components/FriendsRequest';
-
-const messages = [
-    { id: '1', content: 'Salut ! Comment ça va ?', emitterId: 'Lucas', sendAt: '10:45 AM' },
-    { id: '2', content: 'Très bien, merci ! Et toi ?', emitterId: 'Hugo', sendAt: '10:46 AM' },
-    { id: '3', content: 'Ça va aussi !', emitterId: 'Lucas', sendAt: '10:47 AM' },
-]
 
 export const useStore = create<IStore>((set)=>({
 
     // States //
     logged: false,
     user: undefined,
-    messages,
+    messages: [],
     messageQueue: [],
     friends: [],
     friendRequests: [],
