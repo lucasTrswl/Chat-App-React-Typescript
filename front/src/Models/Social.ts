@@ -13,3 +13,7 @@ export interface IFriendRequest {
 export interface IFriendRequestSend {
     receiverId: string
 }
+
+export interface IFriendRequestReceive {
+    userId: string
+}

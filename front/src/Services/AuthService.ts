@@ -1,6 +1,5 @@
 import { HTTP_HEADERS_JSON, HTTP_STATUS_CREATED, HTTP_STATUS_OK } from "../Constants/Http";
 import { IAuthCredentials, IAuthMe } from "../Models/Auth";
-import { IErrorResponse } from "../Models/Error";
 import { AUTH_LOGIN, AUTH_REGISTER, AUTH_LOGOUT, AUTH_ME } from "../Routes/Routes";
 import { BaseService } from "./BaseService";
 
@@ -53,10 +52,6 @@ static async Login(username: string, password: string): Promise<{ success: boole
 
         if (response.status === HTTP_STATUS_CREATED) {
             // Login successful
-
-            const user = await this.Me();
-
-            console.log("logged user", user)
 
             return { success: true, message: "Login successful!" };
         }  else {

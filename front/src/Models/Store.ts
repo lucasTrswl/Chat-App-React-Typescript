@@ -20,9 +20,11 @@ export interface IStore {
     removeLoggerUser: () => void
 
     loadMessages: (messages: IMessage[]) => void
+    addMessage: (message: IMessage) => void
     addMessageQueue: (message: IMessageSendQueue) => void
     removeMessageQueue: (uuid: string) => void
 
     loadFriends: (friend: IFriend[]) => void
-    loadFriendRequest: (friendRequest: IFriendRequest[]) => void
+    loadFriendRequest: (friendRequests: IFriendRequest[]) => void
+    removeFriendRequest: (userId: string) => void
 }

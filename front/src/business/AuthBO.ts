@@ -7,6 +7,8 @@ export class AuthBO extends BaseBO {
         const { success, message } = await AuthService.Login(username, password);
         const user = await AuthService.Me();
 
+        console.log("login status", success, message, user);
+
         if (success) {
 
             if (user != undefined) {

@@ -3,6 +3,7 @@ import { IStore } from '../Models/Store';
 import { IAuthMe } from '../Models/Auth';
 import { IMessage, IMessageSendQueue } from '../Models/Message';
 import { IFriend, IFriendRequest } from '../Models/Social';
+import FriendsRequest from '../components/FriendsRequest';
 
 const messages = [
     { id: '1', content: 'Salut ! Comment ça va ?', emitterId: 'Lucas', sendAt: '10:45 AM' },
@@ -26,6 +27,14 @@ export const useStore = create<IStore>((set)=>({
 
     loadMessages: (messages: IMessage[]) => set({ messages }),
 
+    addMessage: (message: IMessage) => set((state) => {
+        if (state.messages.includes(message)) return {}
+
+        return {
+            messages: [...state.messages, message]
+        }
+    }),
+
     addMessageQueue: (message: IMessageSendQueue) => set((state) => {
         if (state.messageQueue.includes(message)) return {}
         return {
@@ -37,7 +46,14 @@ export const useStore = create<IStore>((set)=>({
         messageQueue: state.messageQueue.filter(m => m.id != messageId)
     })),
 
-    loadFriends: (friends: IFriend[]) => set((state) => ({ friends })),
+    loadFriends: (friends: IFriend[]) => set({ friends }),
 
-    loadFriendRequest: (friendRequests: IFriendRequest[]) => set((state) => ({ friendRequests }))
+    loadFriendRequest: (friendRequests: IFriendRequest[]) => set({ friendRequests }),
+
+    removeFriendRequest: (userId: string) => set((state) => {
+        if (!state.friendRequests.find(r => r.senderId == userId)) return {}
+        return {
+            friendRequests: state.friendRequests.filter(r => r.senderId != userId)
+        }
+    })
 }))

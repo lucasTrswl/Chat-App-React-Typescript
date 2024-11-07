@@ -33,6 +33,10 @@ export class SocialBO extends BaseBO {
 
     async AcceptFriendRequest(requestId: string): Promise<boolean> {
         const { success } = await SocialService.AcceptFriendRequest(requestId);
+
+        if (success) {
+            await this.LoadFriendRequests();
+        }
         
         return success;
     }
