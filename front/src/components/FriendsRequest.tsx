@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import {IFriendRequest} from '../Models/Social';
 import {useStore} from "../Store/Store";
 import { SocialBO } from '../business/SocialBO';
+import FriendNotification from "../components/FriendNotification";
+import FriendAccept from "../components/FriendAccept";
 
 const people2: IFriendRequest[] = [
     {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
@@ -23,6 +25,10 @@ function FriendsRequest() {
     //BO.LoadFriendRequests();
 
     const people = useStore((state) => state.friendRequests);
+    const user = useStore((state) => state.user);
+    if(user !== undefined){
+        console.log(user);
+    }
 
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,17 +55,16 @@ function FriendsRequest() {
 
         
 
-    }
-    const handleAddAcceptRequest = async () => {
-        const success = await AuthService.Logout();
+    };
 
-        //BO.AcceptFriendRequest();
-
+    // Accepter une demande d'ami
+    const handleAddAcceptRequest = async (requestId: string) => {
+        const success = await BO.AcceptFriendRequest(requestId);
         if (success) {
-            console.log("Ami ajouté");
-            navigate("/chat")
+            console.log("Demande d'ami acceptée");
+            navigate("/chat");
         } else {
-            console.log("Erreur")
+            console.log("Erreur lors de l'acceptation de la demande d'ami");
         }
     };
 
@@ -135,7 +140,7 @@ function FriendsRequest() {
                                             <button
                                                 type="submit"
                                                 className="hover:scale-110 transition-transform"
-                                                onClick={handleAddAcceptRequest}
+                                                onClick={() => handleAddAcceptRequest(person.id)}
 
                                             >
                                                 <img
@@ -150,7 +155,10 @@ function FriendsRequest() {
                                 </tbody>
                             </table>
                         </div>
+                        <FriendNotification/>
+                        <FriendAccept/>
                     </div>
+
                 </div>
             </div>
         </>
