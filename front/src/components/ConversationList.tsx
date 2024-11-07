@@ -6,6 +6,7 @@ import { useStore } from "../Store/Store";
 import { OrderDatesDescending } from "../Utility/Dates";
 import { IFriend } from "../Models/Social";
 import { SocialBO } from "../business/SocialBO";
+import { useState, useEffect } from 'react';
 
 type Conversation = {
 	id: number;
@@ -41,6 +42,16 @@ export default function ConversationsList() {
 		}
 	};
 
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+	// Gérer la détection de la largeur d'écran
+	useEffect(() => {
+		const handleResize = () => setIsMobile(window.innerWidth < 900);
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
 	const handleConversationClick = (id: string | number, name: string) => {
 		navigate(`/conversation/${id}`, { state: { name }});
 	};
@@ -49,19 +60,39 @@ export default function ConversationsList() {
 
 		<div className="flex flex-col w-80 h-screen bg-gray-100 border-r">
 			<div className="flex flex-row justify-between w-full">
-				<h2 className="p-4 text-2xl font-semibold text-gray-700 border-b">Conversations</h2>
+				{isMobile ? (
+					<h2 className="p-4 text-lg font-semibold text-gray-700 border-b">Conversations</h2>
+				) : (
+					<h2 className="p-4 text-2xl font-semibold text-gray-700 border-b">Conversations</h2>
+				)}
 				<div className="relative"> {/* Conteneur pour positionner la bulle */}
-					<button
-						type="button"
-						className="p-4 hover:scale-105 transition-transform pl-5"
-						onClick={() => navigate("/friendsRequest")}
-					>
-						<img
-							alt="accept"
-							src={friendsRequest}
-							className="w-9 h-9 mx-auto"
-						/>
-					</button>
+					{isMobile ? (
+						<button
+							type="button"
+							className="p-4 hover:scale-105 transition-transform"
+							onClick={() => navigate("/friendsRequest")}
+						>
+							<img
+								alt="accept"
+								src={friendsRequest}
+								className="w-9 h-9 mx-auto"
+							/>
+						</button>
+					) : (
+						<button
+							type="button"
+							className="p-4 hover:scale-105 transition-transform pl-5"
+							onClick={() => navigate("/friendsRequest")}
+						>
+							<img
+								alt="accept"
+								src={friendsRequest}
+								className="w-9 h-9 mx-auto"
+							/>
+						</button>
+					)}
+
+
 					{/* Bulle de notification en haut à droite du bouton */}
 					{friendRequestsCount > 0 && (
 						<span
