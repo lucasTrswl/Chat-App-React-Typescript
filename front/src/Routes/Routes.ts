@@ -1,5 +1,5 @@
 // Backend url //
-export const API_URL = "http://10.49.32.176:3000";
+export const API_URL = "http://172.20.10.2:3000";
 
 // Auth routes //
 export const AUTH_REGISTER = API_URL + "/auth/register"

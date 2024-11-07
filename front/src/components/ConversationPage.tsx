@@ -26,11 +26,19 @@ export default function ConversationPage() {
 
   // Gérer la détection de la largeur d'écran
   useEffect(() => {
-    ( async () =>{
-      const user = await AuthService.Me();
-      console.log(user);
-    })()
+    const fetchUser = async () => {
+      try {
+        const fetchedUser = await AuthService.Me();
+        console.log("Utilisateur récupéré:", fetchedUser); // Vérifie si l'utilisateur est bien récupéré
+        // Assigne fetchedUser à l'état utilisateur du store, ou dans un état local
+        useStore.setState({ user: fetchedUser });
+      } catch (error) {
+        console.error("Erreur lors de la récupération de l'utilisateur:", error);
+      }
+    };
     
+    fetchUser();
+
     const handleResize = () => setIsMobile(window.innerWidth < 900);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
