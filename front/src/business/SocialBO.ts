@@ -35,7 +35,7 @@ export class SocialBO extends BaseBO {
         const { success } = await SocialService.AcceptFriendRequest(requestId);
 
         if (success) {
-            await this.LoadFriendRequests();
+            await this.LoadFriends();
         }
         
         return success;

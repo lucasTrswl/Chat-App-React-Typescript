@@ -68,7 +68,8 @@ static async Login(username: string, password: string): Promise<{ success: boole
     static async Logout(): Promise<boolean> {
         try {
             const response = await fetch(AUTH_LOGOUT, {
-                method: "post"
+                method: "post",
+                credentials: "include"
             });
     
             const success = response.status == HTTP_STATUS_CREATED;
