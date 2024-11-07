@@ -5,6 +5,7 @@ import ConversationList from "../components/ConversationList";
 import { useState, useEffect } from "react";
 import {IFriendRequest} from '../Models/Social';
 import {useStore} from "../Store/Store";
+import { SocialBO } from '../business/SocialBO';
 
 const people2: IFriendRequest[] = [
     {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
@@ -16,6 +17,9 @@ const people2: IFriendRequest[] = [
 ];
 
 function FriendsRequest() {
+
+    const BO = new SocialBO(useStore);
+
 
     const people = useStore((state) => state.friendRequests);
 
@@ -31,7 +35,21 @@ function FriendsRequest() {
     }, []);
 
 
-    const handleAdd = async () => {
+    const [friendId, setFriendId] = useState('');
+
+    const  handleAddFriend = async () => {
+        const {success, message} = await BO.SendFriendRequest(friendId);
+
+        if(success){
+            console.log("Ami ajouté")
+        } else {
+            console.log("Erreur lors de l'ajout d'ami")
+        }
+
+        
+
+    }
+    const handleAddAcceptRequest = async () => {
         const success = await AuthService.Logout();
 
         if (success) {
@@ -81,11 +99,13 @@ function FriendsRequest() {
                                 type="text"
                                 placeholder="Ajouter un ami"
                                 className="flex-grow p-2 border border-gray-300 rounded w-16 md:w-32 lg:w-48"
+                                value={friendId}
+                                onChange={(e) => setFriendId(e.target.value)}
                             />
                             <button
                                 type="button"
                                 className="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
-                                // onClick={handleAddFriend}
+                                onClick={handleAddFriend}
                             >
                                 Ajouter
                             </button>
@@ -112,7 +132,7 @@ function FriendsRequest() {
                                             <button
                                                 type="submit"
                                                 className="hover:scale-110 transition-transform"
-                                                onClick={handleAdd}
+                                                onClick={handleAddAcceptRequest}
 
                                             >
                                                 <img

@@ -2,6 +2,7 @@ import { SocialService } from "../Services/SocialService";
 import IsSameArray from "../Utility/IsSameArray";
 import { IFriend } from "../Models/Social";
 import { BaseBO } from "./BaseBO";
+import { IServiceResponse } from "../Models/ServiceResponse";
 
 export class SocialBO extends BaseBO {
     
@@ -23,10 +24,11 @@ export class SocialBO extends BaseBO {
         this.store.getState().loadFriendRequest(friendRequests);
     }
 
-    async SendFriendRequest(friendId: string): Promise<boolean> {
-        const { success } = await SocialService.SendFriendRequest(friendId);
+    async SendFriendRequest(friendId: string): Promise<IServiceResponse> {
+        const { success, message } = await SocialService.SendFriendRequest(friendId);
 
-        return success;
+        
+        return {success, message};
     }
 
     async AcceptFriendRequest(requestId: string): Promise<boolean> {
