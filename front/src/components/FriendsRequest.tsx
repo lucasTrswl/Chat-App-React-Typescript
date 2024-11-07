@@ -62,7 +62,7 @@ function FriendsRequest() {
         const success = await BO.AcceptFriendRequest(requestId);
         if (success) {
             console.log("Demande d'ami acceptée");
-            navigate("/chat");
+            navigate("/conversation");
         } else {
             console.log("Erreur lors de l'acceptation de la demande d'ami");
         }

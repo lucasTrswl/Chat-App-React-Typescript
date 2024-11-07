@@ -66,6 +66,7 @@ export default function ConversationPage() {
   const linkifyOptions = {
     target: '_blank',
     rel: 'noopener noreferrer',
+    className: 'underline',
   };
 
   return (
@@ -114,7 +115,7 @@ export default function ConversationPage() {
                 <p>{msg.content}</p>
                 </Linkify>
 
-                <span className="text-xs text-gray-500">{RelativeTimeString(msg.sendAt)}</span>
+                <span className="text-xs text-black">{RelativeTimeString(msg.sendAt)}</span>
               </div>
             </div>
           ))}
