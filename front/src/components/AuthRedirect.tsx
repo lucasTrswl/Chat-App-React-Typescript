@@ -6,13 +6,13 @@ interface AuthProps {
     children: React.ReactNode
 }
 
-export default function RequireAuth({ children }: AuthProps) {
+export default function AuthRedirect({ children }: AuthProps) {
     const logged = useStore((state) => state.logged); // Vérifie si l'utilisateur est connecté
     const navigate = useNavigate(); 
   
     useEffect(()=>{
-        if (!logged) {
-            navigate("/login")
+        if (logged) {
+            navigate("/conversation")
         }
     })
   

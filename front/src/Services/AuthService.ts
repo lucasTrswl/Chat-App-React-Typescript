@@ -48,8 +48,6 @@ static async Login(username: string, password: string): Promise<{ success: boole
             body: JSON.stringify({ username, password })
         });
 
-        console.log(response, HTTP_HEADERS_JSON, JSON.stringify({ username, password }));
-
         if (response.status === HTTP_STATUS_CREATED) {
             // Login successful
 
