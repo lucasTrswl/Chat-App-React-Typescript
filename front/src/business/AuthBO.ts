@@ -28,4 +28,18 @@ export class AuthBO extends BaseBO {
 
         return success;
     }
+
+    async LoadUser(): Promise<boolean> {
+        const user = await AuthService.Me();
+        
+        const success = user == undefined;
+
+        if (success) {
+            this.store.getState().removeLoggerUser();
+        } else {
+            this.store.getState().setLoggedUser(user);
+        }
+
+        return success;
+    }
 }

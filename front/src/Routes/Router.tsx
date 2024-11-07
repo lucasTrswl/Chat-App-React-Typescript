@@ -4,12 +4,16 @@ import Register from "../components/Register";
 import Login from "../components/Login";
 import ConversationPage from "../components/ConversationPage";
 import ConversationsList from "../components/ConversationList";
-import RequireAuth from "../components/RequireAuth";
-
 import FriendsRequest from "../components/FriendsRequest";
+
 import { useStore } from "../Store/Store";
 import { MessageBO } from "../business/MessageBO";
 import { SocialBO } from "../business/SocialBO";
+import { AuthBO } from "../business/AuthBO";
+
+import RequireAuth from "../components/RequireAuth";
+import AuthRedirect from "../components/AuthRedirect";
+import Redirect from "../components/Redirect";
 
 const conversationLoader: LoaderFunction = async ({ params }) => {
 	const id = params.id;
@@ -35,15 +39,30 @@ const friendRequestLoader: LoaderFunction = async ({ params }) => {
 	return 0;
 }
 
+const authenticationLoader: LoaderFunction = async () => {
+	const BO = new AuthBO(useStore);
+	BO.LoadUser();
+
+	return 0;
+}
+
   
 const router = createBrowserRouter([
 	{
 		path: "/register",
-		element: <Register />,
+		element: (
+		<AuthRedirect>
+			<Register />
+		</AuthRedirect>
+		),
 	},
 	{
 		path: "/login",
-		element: <Login />,
+		element: (
+		<AuthRedirect>
+			<Login />
+		</AuthRedirect>
+		),
 	},
 	{
 		path: "/conversation",
@@ -56,16 +75,25 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/conversation/:id",
-		element: <ConversationPage />,
+		element: (
+		<RequireAuth>
+			<ConversationPage />
+		</RequireAuth>
+		),
 		loader: conversationLoader,
 	},
-	/*{
+	{
 		path: "/",
-		element: <ConversationsList />,
-	},*/
+		element: <Redirect/>,
+		loader: authenticationLoader,
+	},
 	{
 		path: "/friendsRequest",
-		element: <FriendsRequest />,
+		element: (
+		<RequireAuth>
+			<FriendsRequest />
+		</RequireAuth>
+		),
 		loader: friendRequestLoader
 	},
 ]);
