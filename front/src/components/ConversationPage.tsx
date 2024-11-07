@@ -8,6 +8,9 @@ import { MessageBO } from '../business/MessageBO';
 import { OrderDatesAscending, RelativeTimeString } from '../Utility/Dates';
 import { IMessage } from '../Models/Message';
 import { AuthService } from '../Services/AuthService';
+import Notification from "./Notification";
+import FriendAccept from "./FriendAccept";
+
 
 export default function ConversationPage() {
   const { id } = useParams();
@@ -104,7 +107,6 @@ export default function ConversationPage() {
         <div className="p-4 bg-white shadow-md ">
           <h1 className="text-xl font-bold text-gray-800">Conversation avec {name}</h1>
         </div>
-
         <div className="flex-grow overflow-y-auto p-4">
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.emitterId === userId ? 'justify-end' : 'justify-start'} mb-2`}>
