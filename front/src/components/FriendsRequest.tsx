@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import {IFriendRequest} from '../Models/Social';
 import {useStore} from "../Store/Store";
 import { SocialBO } from '../business/SocialBO';
+import FriendNotification from "../components/FriendNotification";
+import FriendAccept from "../components/FriendAccept";
 
 const people2: IFriendRequest[] = [
     {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
@@ -22,6 +24,10 @@ function FriendsRequest() {
 
 
     const people = useStore((state) => state.friendRequests);
+    const user = useStore((state) => state.user);
+    if(user !== undefined){
+        console.log(user);
+    }
 
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -119,7 +125,7 @@ function FriendsRequest() {
                                 <thead>
                                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                     <th className="py-3 px-6">#</th>
-                                    <th className="py-3 px-6">Pseudo</th>
+                                    <th className="py-3 px-6">Identifiant Utilisateur</th>
                                     <th className="py-3 px-6">Accepter ?</th>
                                 </tr>
                                 </thead>
@@ -147,7 +153,10 @@ function FriendsRequest() {
                                 </tbody>
                             </table>
                         </div>
+                        <FriendNotification/>
+                        <FriendAccept/>
                     </div>
+
                 </div>
             </div>
         </>
