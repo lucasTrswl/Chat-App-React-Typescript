@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import {IFriendRequest} from '../Models/Social';
 import {useStore} from "../Store/Store";
 import { SocialBO } from '../business/SocialBO';
-import FriendNotification from "../components/FriendNotification";
+import Notification from "./Notification";
 import FriendAccept from "../components/FriendAccept";
 
 const people2: IFriendRequest[] = [
@@ -17,6 +17,12 @@ const people2: IFriendRequest[] = [
     {id: '5', senderId: 'Diego', requestedAt: '2024-11-06T17:22:56.709Z'},
     {id: '6', senderId: 'Jacques', requestedAt: '2024-11-06T18:22:56.709Z'},
 ];
+
+const notif = [
+    {message : 'salut1', url: '/test'},
+    {message : 'salut2', url: '/test2'},
+    {message : 'salut3', url: '/test3'},
+]
 
 function FriendsRequest() {
 
@@ -178,8 +184,11 @@ function FriendsRequest() {
                                 </tbody>
                             </table>
                         </div>
-                        <FriendNotification/>
-                        <FriendAccept/>
+                        {notif.map(({message, url}, index) =>
+
+                            <Notification key={index} message={message} url={url} />
+
+                        )}
                     </div>
 
                 </div>
