@@ -68,7 +68,7 @@ function FriendsRequest() {
         }
     };
 
-    const userId = "13cc35d1-d29c-41f6-958a-c879a2a2fb7e"; // Exemple d'identifiant utilisateur à afficher et copier
+    const userId = user != undefined ? user.id : "";
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(userId);
