@@ -8,7 +8,9 @@ import { useStore } from "./Store/Store";
 function App() {
 
 	const notification = new Notifications(useStore)
+	
 	return <Router />;
+	
 
 }
 

@@ -59,10 +59,10 @@ const router = createBrowserRouter([
 		element: <ConversationPage />,
 		loader: conversationLoader,
 	},
-	{
+	/*{
 		path: "/",
 		element: <ConversationsList />,
-	},
+	},*/
 	{
 		path: "/friendsRequest",
 		element: <FriendsRequest />,

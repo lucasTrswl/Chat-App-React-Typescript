@@ -50,10 +50,10 @@ export default function Register() {
             placeholder="Password"
             {...register("password", {
               required: "Password is required",
-              pattern: {
-                value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                message: "Must be at least 8 characters, with a letter, number, and special character",
-              },
+             // pattern: {
+                //value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                //message: "Must be at least 8 characters, with a letter, number, and special character",
+             // },
             })}
             className="w-full p-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -66,6 +66,7 @@ export default function Register() {
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-semibold transition duration-300"
+          //onClick={redirectButton}
         >
           S'inscrire
         </button>

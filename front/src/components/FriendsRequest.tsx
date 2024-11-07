@@ -7,6 +7,7 @@ import {IFriendRequest} from '../Models/Social';
 import {useStore} from "../Store/Store";
 import { SocialBO } from '../business/SocialBO';
 import Notification from "./Notification";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const people2: IFriendRequest[] = [
     {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
@@ -17,13 +18,12 @@ const people2: IFriendRequest[] = [
     {id: '6', senderId: 'Jacques', requestedAt: '2024-11-06T18:22:56.709Z'},
 ];
 
-const notif = [
-    {message : 'salut1', url: '/test'},
-    {message : 'salut2', url: '/test2'},
-    {message : 'salut3', url: '/test3'},
-]
 
 function FriendsRequest() {
+
+    const [textToCopy, setTextToCopy] = useState('');
+
+    
 
     const BO = new SocialBO(useStore);
 
@@ -75,9 +75,9 @@ function FriendsRequest() {
 
     const userId = user != undefined ? user.id : "";
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(userId);
-    };
+    useEffect(() => {
+        setTextToCopy(userId); 
+    }, [userId]);
 
     return (
         <>
@@ -138,13 +138,12 @@ function FriendsRequest() {
                                 readOnly
                                 className="text-center border border-gray-300 rounded h-8 w-24 text-sm"
                             />
-                            <button
-                                type="button"
-                                onClick={copyToClipboard}
-                                className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-xs"
-                            >
-                                Copier
-                            </button>
+                          
+                            <CopyToClipboard text={textToCopy}>
+                                <button className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-xs">
+                                    Copier
+                                </button>
+                            </CopyToClipboard>
                         </div>
                     </header>
                     <div className="flex-grow flex justify-center items-center bg-gray-100"
@@ -183,11 +182,8 @@ function FriendsRequest() {
                                 </tbody>
                             </table>
                         </div>
-                        {notif.map(({message, url}, index) =>
 
-                            <Notification key={index} message={message} url={url} />
-
-                        )}
+                            
                     </div>
 
                 </div>
