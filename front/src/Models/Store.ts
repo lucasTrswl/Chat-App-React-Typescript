@@ -1,5 +1,5 @@
 import { IAuthMe } from "./Auth"
-import { IMessage } from "./Message"
+import { IMessage, IMessageSendQueue } from "./Message"
 import { IFriend, IFriendRequest } from "./Social"
 
 export interface IStore {
@@ -9,6 +9,7 @@ export interface IStore {
     user: IAuthMe | undefined
     
     messages: IMessage[]
+    messageQueue: IMessageSendQueue[]
     
     friends: IFriend[]
     friendRequests: IFriendRequest[]
@@ -19,8 +20,9 @@ export interface IStore {
     removeLoggerUser: () => void
 
     loadMessages: (messages: IMessage[]) => void
-    addMessage: (message: IMessage) => void
+    addMessageQueue: (message: IMessageSendQueue) => void
+    removeMessageQueue: (uuid: string) => void
 
-    addFriend: (friend: IFriend) => void
-    addFriendRequest: (friendRequest: IFriendRequest) => void
+    loadFriends: (friend: IFriend[]) => void
+    loadFriendRequest: (friendRequest: IFriendRequest[]) => void
 }

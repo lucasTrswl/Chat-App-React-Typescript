@@ -6,12 +6,12 @@ import { useState, useEffect } from "react";
 import {IFriendRequest} from '../Models/Social';
 
 const people: IFriendRequest[] = [
-    {id: '1', username: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
-    {id: '2', username: 'Marc', requestedAt: '2024-11-06T15:22:56.709Z'},
-    {id: '3', username: 'Bob', requestedAt: '2024-11-06T16:22:56.709Z'},
-    {id: '4', username: 'Stéphanie', requestedAt: '2024-11-06T17:22:56.709Z'},
-    {id: '5', username: 'Diego', requestedAt: '2024-11-06T17:22:56.709Z'},
-    {id: '6', username: 'Jacques', requestedAt: '2024-11-06T18:22:56.709Z'},
+    {id: '1', senderId: 'Joe', requestedAt : '2024-11-06T14:22:56.709Z'},
+    {id: '2', senderId: 'Marc', requestedAt: '2024-11-06T15:22:56.709Z'},
+    {id: '3', senderId: 'Bob', requestedAt: '2024-11-06T16:22:56.709Z'},
+    {id: '4', senderId: 'Stéphanie', requestedAt: '2024-11-06T17:22:56.709Z'},
+    {id: '5', senderId: 'Diego', requestedAt: '2024-11-06T17:22:56.709Z'},
+    {id: '6', senderId: 'Jacques', requestedAt: '2024-11-06T18:22:56.709Z'},
 ];
 
 function FriendsRequest() {
@@ -104,7 +104,7 @@ function FriendsRequest() {
                                 {people.sort((a,b) => Date.parse(b.requestedAt) - Date.parse(a.requestedAt)).map((person, index) => (
                                     <tr key={person.id} className="border-b border-gray-200 hover:bg-gray-100">
                                         <td className="py-3 px-6">{index + 1}</td>
-                                        <td className="py-3 px-6 font-semibold">{person.username}</td>
+                                        <td className="py-3 px-6 font-semibold">{person.senderId}</td>
                                         <td className="py-3 px-6">
                                             <button
                                                 type="submit"

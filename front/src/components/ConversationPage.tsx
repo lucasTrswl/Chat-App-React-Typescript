@@ -1,24 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import ConversationsList from './ConversationList';
-import { IMessage } from '../Models/Message';
 import { useStore } from '../Store/Store';
 
 import Linkify from 'linkify-react';
-
-const messages:  IMessage[] = [
-  { id: "1", content: 'Salut ! Comment ça va ?', emitterId: 'Lucas', sendAt: '10:45 AM' },
-  { id: "2", content: 'Très bien, merci ! Et toi ?', emitterId: 'Hugo', sendAt: '10:46 AM' },
-  { id: "3", content: 'Ça va aussi !', emitterId: 'Lucas', sendAt: '10:47 AM' },
-]
+import { MessageBO } from '../business/MessageBO';
+import { OrderDatesAscending, RelativeTimeString } from '../Utility/Dates';
+import { IMessage } from '../Models/Message';
 
 export default function ConversationPage() {
   const { id } = useParams();
   const location = useLocation();
   const { name } = location.state || {};
 
-  const messages = useStore((state) => state.messages);
-  const addMessage = useStore((state) => state.addMessage);
+  const messages = OrderDatesAscending(useStore((state) => state.messages), (message: IMessage) => message.sendAt);
+  const user = useStore((state) => state.user);
+  const userId = user != undefined ? user.id : "";
+  const BO = new MessageBO(useStore);
 
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,13 +34,14 @@ export default function ConversationPage() {
 
   const handleSendMessage = () => {
     if (message.trim()) {
-      const newMessage: IMessage = {
-        id: Date.now().toString(),
-        content: message,
-        emitterId: 'Hugo',
-        sendAt: new Date().toLocaleTimeString(),
-      };
-      addMessage(newMessage);  
+      // const newMessage: IMessage = {
+      //   id: Date.now().toString(),
+      //   content: message,
+      //   emitterId: 'Hugo',
+      //   sendAt: new Date().toLocaleTimeString(),
+      // };
+      const friendId = id!;
+      BO.SendMessage( friendId,  message);  
       setMessage('');          
     }
   };
@@ -85,15 +84,15 @@ export default function ConversationPage() {
 
         <div className="flex-grow overflow-y-auto p-4">
           {messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.emitterId === 'Hugo' ? 'justify-end' : 'justify-start'} mb-2`}>
-              <div className={`max-w-xs rounded-lg p-3 ${msg.emitterId === 'Hugo' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
+            <div key={msg.id} className={`flex ${msg.emitterId === userId ? 'justify-end' : 'justify-start'} mb-2`}>
+              <div className={`max-w-xs rounded-lg p-3 ${msg.emitterId === userId ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'}`}>
 
                
                <Linkify>
                 <p>{msg.content}</p>
                 </Linkify>
 
-                <span className="text-xs text-gray-500">{msg.sendAt}</span>
+                <span className="text-xs text-gray-500">{RelativeTimeString(msg.sendAt)}</span>
               </div>
             </div>
           ))}

@@ -3,6 +3,7 @@ import { AuthService } from "../Services/AuthService"; // Adjust path as necessa
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../Store/Store";
+import { AuthBO } from "../business/AuthBO";
 
 type Inputs = {
   username: string;
@@ -15,7 +16,10 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: Inputs) => {
-    const { success, message } = await AuthService.Login(values.username, values.password);
+
+    const BO = new AuthBO(useStore);
+
+    const { success, message } = await BO.Login(values.username, values.password);
 
     if (success) {
       console.log("Login successful!");
@@ -25,8 +29,6 @@ export default function Login() {
       setLoginMessage(message);
     }
   };
-
-  const logged = useStore((state) => state.logged)
 
   
 

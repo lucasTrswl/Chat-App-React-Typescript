@@ -3,8 +3,7 @@ export interface IAuthMe {
     username: string
 }
 
-export interface IAuthRegister {
-    message: string
-    error: string
-    statusCode: number
+export interface IAuthCredentials {
+    username: string
+    password: string
 }

@@ -1,8 +1,9 @@
-import { IAuthMe, IAuthRegister } from "../Models/Auth";
+import { HTTP_HEADERS_JSON, HTTP_STATUS_CREATED, HTTP_STATUS_OK } from "../Constants/Http";
+import { IAuthCredentials, IAuthMe } from "../Models/Auth";
+import { IErrorResponse } from "../Models/Error";
 import { AUTH_LOGIN, AUTH_REGISTER, AUTH_LOGOUT, AUTH_ME } from "../Routes/Routes";
+import { BaseService } from "./BaseService";
 
-const HTTP_STATUS_OK = 200;
-const HTTP_STATUS_CREATED = 201;
 
 export class AuthService {
     static async Me(): Promise<IAuthMe | undefined> {
@@ -12,56 +13,27 @@ export class AuthService {
         try {
             const response = await fetch(AUTH_ME, {
                 method: "get",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
+                headers: HTTP_HEADERS_JSON,
+                credentials: "include"
             });
 
-            const success = response.status == HTTP_STATUS_OK;
-
-            if (!success) {
-                return;
+            if (response.status == HTTP_STATUS_OK) {
+                authObject = (await response.json()) as IAuthMe;
             }
-
-            const authObject: IAuthMe = (await response.json()) as IAuthMe;
-
-            return authObject
-
+            
         } catch (ex) {
             console.log('ERREUR AUTH ME',ex);
         }
-            
-        return undefined;
+        
+        return authObject;
     }
 
     static async Register(username: string, password: string): Promise<string> {
-        let message = "";
-
-        try {
-            const response = await fetch(AUTH_REGISTER, {
-                method: "post",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username,
-                    password
-                })
-            });
-
-            try {
-                const authObject: IAuthRegister = (await response.json()) as IAuthRegister;
-                message = authObject.message;
-            } catch(ex) {
-                console.log("ERREUR AUTH REGISTER JSON", ex);
-            }
-            
-        } catch(ex) {
-            console.log("ERR AUTH REGISTER REQUEST",ex);
-            message = "Problème de connexion, vérifier votre accès internet.";
-        } 
+        const userRegister: IAuthCredentials = {
+            username,
+            password
+        }
+        const { success, message } = await BaseService.Send(AUTH_REGISTER, userRegister);
 
         return message;
     }
@@ -72,15 +44,20 @@ static async Login(username: string, password: string): Promise<{ success: boole
     try {
         const response = await fetch(AUTH_LOGIN, {
             method: "post",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: HTTP_HEADERS_JSON,
+            credentials: "include",
             body: JSON.stringify({ username, password })
         });
 
+        console.log(response, HTTP_HEADERS_JSON, JSON.stringify({ username, password }));
+
         if (response.status === HTTP_STATUS_CREATED) {
             // Login successful
+
+            const user = await this.Me();
+
+            console.log("logged user", user)
+
             return { success: true, message: "Login successful!" };
         }  else {
             // Other error
