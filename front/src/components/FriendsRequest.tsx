@@ -68,6 +68,12 @@ function FriendsRequest() {
         }
     };
 
+    const userId = "13cc35d1-d29c-41f6-958a-c879a2a2fb7e"; // Exemple d'identifiant utilisateur à afficher et copier
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(userId);
+    };
+
     return (
         <>
             {/* Conteneur principal en flex pour ConversationList et la table des demandes */}
@@ -101,7 +107,7 @@ function FriendsRequest() {
                     </div>
                 )}
                 <div className="w-full">
-                    <header className="bg-white p-4 pb-12 shadow-md flex items-center justify-center">
+                    <header className="bg-white p-4  shadow-md flex items-center justify-center flex-col">
                         <div className="flex items-center w-full max-w-lg space-x-4">
                             <input
                                 type="text"
@@ -118,6 +124,23 @@ function FriendsRequest() {
                                 Ajouter
                             </button>
                         </div>
+
+                        <div className="flex flex-row items-center w-full p-4 max-w-lg space-x-4">
+                            <h2 className="text-sm">Mon Identifiant Utilisateur :</h2>
+                            <input
+                                type="text"
+                                value={userId}
+                                readOnly
+                                className="text-center border border-gray-300 rounded h-8 w-24 text-sm"
+                            />
+                            <button
+                                type="button"
+                                onClick={copyToClipboard}
+                                className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition text-xs"
+                            >
+                                Copier
+                            </button>
+                        </div>
                     </header>
                     <div className="flex-grow flex justify-center items-center bg-gray-100"
                          style={{height: 'calc(100vh - 110px)'}}>
@@ -126,7 +149,7 @@ function FriendsRequest() {
                             <table className="table-auto w-full text-center border-collapse">
                                 <thead>
                                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th className="py-3 px-6">#</th>
+                                <th className="py-3 px-6">#</th>
                                     <th className="py-3 px-6">Identifiant Utilisateur</th>
                                     <th className="py-3 px-6">Accepter ?</th>
                                 </tr>
