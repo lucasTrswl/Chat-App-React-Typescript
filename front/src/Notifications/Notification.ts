@@ -55,9 +55,12 @@ export class Notifications extends BaseBO {
     }
     
     private friendRequestAccepted(request: IFriendRequest) {
+
         this.store.getState().removeFriendRequest(request.senderId);
         const BO = new SocialBO(this.store);
         BO.LoadFriends();
+        BO.LoadFriendRequests();
         this.Notify("Demande d'ami accepté", `Utilisateur: ${request.senderId}` , "/conversations");
+        
     }
 }

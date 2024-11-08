@@ -7,10 +7,9 @@ import { useStore } from "./Store/Store";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; 
 
-function App() {
+const notification = new Notifications(useStore)
 
-	const notification = new Notifications(useStore)
-	
+function App() {
 	
 	return (
 		<><ToastContainer /><Router /></>

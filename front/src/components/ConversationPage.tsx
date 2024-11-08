@@ -131,6 +131,7 @@ export default function ConversationPage() {
             className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 mr-2"
           />
           <button
+            type='submit'
             onClick={handleSendMessage}
             className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
           >

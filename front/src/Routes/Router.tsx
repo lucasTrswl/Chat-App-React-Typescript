@@ -15,8 +15,10 @@ import RequireAuth from "../components/RequireAuth";
 import AuthRedirect from "../components/AuthRedirect";
 import Redirect from "../components/Redirect";
 
-const conversationLoader: LoaderFunction = async ({ params }) => {
-	const id = params.id;
+const conversationLoader: LoaderFunction = async (parameters) => {
+	await authenticationLoader(parameters);
+	
+	const id = parameters.params.id;
 	if (id == undefined) return 0;
 
 	const BO = new MessageBO(useStore);
@@ -25,23 +27,28 @@ const conversationLoader: LoaderFunction = async ({ params }) => {
 	return 0;
 };
 
-const friendLoader: LoaderFunction = async ({ params }) => {
+const friendLoader: LoaderFunction = async (parameters) => {
+	await authenticationLoader(parameters);
 	const BO = new SocialBO(useStore);
 	BO.LoadFriends();
 
 	return 0;
 }
 
-const friendRequestLoader: LoaderFunction = async ({ params }) => {
+const friendRequestLoader: LoaderFunction = async (parameters) => {
+	await authenticationLoader(parameters);
+
 	const BO = new SocialBO(useStore);
 	BO.LoadFriendRequests();
 
 	return 0;
 }
 
+
+
 const authenticationLoader: LoaderFunction = async () => {
 	const BO = new AuthBO(useStore);
-	BO.LoadUser();
+	await BO.LoadUser();
 
 	return 0;
 }

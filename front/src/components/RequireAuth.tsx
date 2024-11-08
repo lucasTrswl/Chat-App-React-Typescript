@@ -13,6 +13,7 @@ export default function RequireAuth({ children }: AuthProps) {
     useEffect(()=>{
         if (!logged) {
             navigate("/login")
+            console.log("not logged")
         }
     })
   
