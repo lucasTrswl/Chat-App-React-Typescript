@@ -14,7 +14,7 @@ export default function AuthRedirect({ children }: AuthProps) {
         if (logged) {
             navigate("/conversation")
         }
-    })
+    }, [logged])
   
     return <>{children}</>;
 }

@@ -21,7 +21,7 @@ export class AuthService {
             }
             
         } catch (ex) {
-            console.log('ERREUR AUTH ME',ex);
+            //console.log('ERREUR AUTH ME',ex);
         }
         
         return authObject;

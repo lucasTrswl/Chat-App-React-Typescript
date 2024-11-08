@@ -15,16 +15,16 @@ export default function Login() {
   const [loginMessage, setLoginMessage] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const BO = new AuthBO(useStore);
+
   const onSubmit = async (values: Inputs) => {
-
-    const BO = new AuthBO(useStore);
-
     const { success, message } = await BO.Login(values.username, values.password);
 
     if (success) {
       console.log("Login successful!");
       //navigate to dashboard
       navigate("/conversation");
+      setLoginMessage(null);
     } else {
       setLoginMessage(message);
     }

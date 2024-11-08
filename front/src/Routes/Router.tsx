@@ -16,30 +16,34 @@ import AuthRedirect from "../components/AuthRedirect";
 import Redirect from "../components/Redirect";
 
 const conversationLoader: LoaderFunction = async (parameters) => {
-	await authenticationLoader(parameters);
+	const AUTH_BO = new AuthBO(useStore);
+	await AUTH_BO.LoadUser();
 	
 	const id = parameters.params.id;
 	if (id == undefined) return 0;
 
 	const BO = new MessageBO(useStore);
-	BO.LoadMessages(id);
+	await BO.LoadMessages(id);
 
 	return 0;
 };
 
 const friendLoader: LoaderFunction = async (parameters) => {
-	await authenticationLoader(parameters);
-	const BO = new SocialBO(useStore);
-	BO.LoadFriends();
+	const AUTH_BO = new AuthBO(useStore);
+	await AUTH_BO.LoadUser();
+
+	const MESSAGE_BO = new SocialBO(useStore);
+	await MESSAGE_BO.LoadFriends();
 
 	return 0;
 }
 
-const friendRequestLoader: LoaderFunction = async (parameters) => {
-	await authenticationLoader(parameters);
+const friendRequestLoader: LoaderFunction = async () => {
+	const AUTH_BO = new AuthBO(useStore);
+	await AUTH_BO.LoadUser();
 
-	const BO = new SocialBO(useStore);
-	BO.LoadFriendRequests();
+	const SOCIAL_BO = new SocialBO(useStore);
+	await SOCIAL_BO.LoadFriendRequests();
 
 	return 0;
 }
