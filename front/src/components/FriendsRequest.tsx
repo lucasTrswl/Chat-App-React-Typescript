@@ -68,7 +68,7 @@ function FriendsRequest() {
         const success = await BO.AcceptFriendRequest(requestId);
         if (success) {
             console.log("Demande d'ami acceptée");
-            navigate("/conversation");
+            navigate("/chat");
         } else {
             console.log("Erreur lors de l'acceptation de la demande d'ami");
         }
@@ -148,7 +148,7 @@ function FriendsRequest() {
                         </div>
                     </header>
                     <div className="flex-grow flex justify-center items-center bg-gray-100"
-                         style={{height: 'calc(100vh - 110px)'}}>
+                         style={{height: 'calc(100vh - 140px)'}}>
                         <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-4 max-h-[80vh] overflow-y-auto">
                             <h1 className="text-2xl font-bold text-center mb-4">Mes demandes d'amis</h1>
                             <table className="table-auto w-full text-center border-collapse">
@@ -181,16 +181,11 @@ function FriendsRequest() {
                                     </tr>
                                 ))}
                                 </tbody>
-                                
                             </table>
                         </div>
-
-                            
                     </div>
-
                 </div>
             </div>
-            
         </>
     );
 }
